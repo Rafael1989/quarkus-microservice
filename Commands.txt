@@ -3,3 +3,16 @@ mvn -U io.quarkus:quarkus-maven-plugin:create -DprojectGroupId=org.agoncal.quark
 curl http://localhost:8080/q/openapi
 curl http://localhost:8080/q/openapi -H "Accept: application/json"
 http://localhost:8080/q/swagger-ui
+curl -X POST http://localhost:8702/api/books -d "title=Quarkus&author=Antonio&year=2021&genre=IT"
+curl http://localhost:8080/q/openapi
+curl http://localhost:8080/q/openapi -H "Accept: application/json"
+mvn quarkus:add-extension -Dextensions="rest-client"
+mvn package -Dquarkus.package.type=native -Dmaven.test.skip=true  // CRIA UMA IMAGEM BINARIA PRO SEU SISTEMA OPERACIONAL
+mvn package -Dquarkus.package.type=native -Dquarkus.native.container-build=true -Dmaven.test.skip=true // CRIA UMA IMAGEM BINARIA DE LINUX
+mvn package -Dquarkus.package.type=native -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dmaven.test.skip=true // CRIA A IMAGEM BASEADA NO DOCKER FILE
+docker run -i --rm -p 8701:8701 restnumber/rest-number:1.0.0-SNAPSHOT
+docker-compose -f vintagestore-docker-compose.yaml up
+docker container ls
+docker image ls
+docker container kill 11cd596c2ea7
+docker-compose -f vintagestore-docker-compose.yaml down
